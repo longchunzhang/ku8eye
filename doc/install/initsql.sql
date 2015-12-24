@@ -14,6 +14,7 @@ Date: 2015-11-24 15:57:56
 */
 DROP DATABASE IF EXISTS ku8eye;
 create database ku8eye DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+grant all privileges on ku8eye.* to 'ku8eye'@'localhost' identified  by '123456';
 grant all privileges on ku8eye.* to 'ku8eye'@'%' identified  by '123456';
 use ku8eye;
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +32,7 @@ CREATE TABLE `host` (
   `LOCATION` varchar(128) DEFAULT NULL COMMENT 'host location ,etc room ',
   `NOTE` varchar(256) DEFAULT NULL COMMENT 'note for this record',
   `LAST_UPDATED` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'last updated time',
-  `CORES` tinyint(4) DEFAULT NULL,
+  `CORES` smallint(6) DEFAULT NULL,
   `MEMORY` mediumint(6) DEFAULT NULL,
   `USAGE_FLAG` tinyint(4) DEFAULT NULL,
   `SSH_LOGIN` tinyint(4) DEFAULT NULL,
