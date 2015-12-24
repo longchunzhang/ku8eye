@@ -69,6 +69,7 @@ $.ajax({
     }
 }); 
 
+//未完成安装
 function install(installType){
 	$("#cluster").html("");
 	$("#example1").attr('class','installationMode')
@@ -94,29 +95,42 @@ function install(installType){
 	        $("#example1").html(tableList);  
 	        
 	        $( '#example1' ).find('th').bind('click',function(){
-	        	if($( this ).attr('c')==1){
+	        	if($( this ).attr('id')==0){
 	        		$(".content").load("singleNode.html");
 	        	}else{
 	        		$(".content").load("multiNode.html");
 	        	}
-	        	
+	        	selectTemplate($( this ).attr('id'));
 			});
 	    }
 	});
+	
 }
 
+//选择安装的模板
+function selectTemplate(templateId){
+	$.ajax({
+	    url:"/deploycluster/selecttemplate/"+templateId+"/1",
+	    type: "GET",
+	    dataType:"json",
+	    success: function(data){
+	    }
+	}); 
+}
+
+//已完成安装
 function installed(installData){
 	$("#cluster").html("");
 	$("#example1").attr('class','table table-bordered table-hover');
 	$("#example1").attr('font-size','12px');
 	if(installData.installType==2){
-		$("#installtitle").html("自动完成安装！！！！");
+		$("#installtitle").html("系统检测到您已经安装Kubernetes集群（自动模式），以下是详细信息");
 	}else{
-		$("#installtitle").html("手动完成安装！！！！");	
+		$("#installtitle").html("系统检测到您已经安装Kubernetes集群（手工模式），以下是详细信息");	
 	}
 	$("#example1").html('<tr><th>id</th><th>Host Name</th><th>IP</th><th>Cores</th><th>Memory</th><th>SSH login</th><th>Usage</th><th>location</th></tr>');
 	$.ajax({
-	    url:"/host/cluster-hosts/"+installData.installType,
+	    url:"/host/cluster-hosts/1",
 	    type: "GET",
 	    dataType:"json",
 	    success: function(data){
